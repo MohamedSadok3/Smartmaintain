@@ -1,0 +1,34 @@
+{
+  "degradation_roulement": {
+    "recommendation": "Inspecter les roulements, contrôler leur lubrification et planifier leur remplacement si nécessaire.",
+    "status": "provisional_expert_validation_required"
+  },
+  "desequilibre_desalignement": {
+    "recommendation": "Contrôler l’équilibrage du rotor et l’alignement de l’accouplement.",
+    "status": "provisional_expert_validation_required"
+  },
+  "cavitation": {
+    "recommendation": "Vérifier la pression d’aspiration, le niveau du fluide et l’absence d’obstruction à l’entrée de la pompe.",
+    "status": "provisional_expert_validation_required"
+  },
+  "fuite_joints": {
+    "recommendation": "Inspecter les joints et garnitures de la pompe, puis remplacer les éléments présentant une fuite.",
+    "status": "provisional_expert_validation_required"
+  },
+  "fuite_air": {
+    "recommendation": "Inspecter le circuit pneumatique et rechercher une fuite d’air.",
+    "status": "provisional_expert_validation_required"
+  },
+  "surchauffe": {
+    "recommendation": "Contrôler le refroidissement, la lubrification et la température d’huile du compresseur.",
+    "status": "provisional_expert_validation_required"
+  },
+  "encrassement": {
+    "recommendation": "Inspecter et nettoyer les surfaces d’échange thermique, puis contrôler les pertes de charge.",
+    "status": "provisional_expert_validation_required"
+  },
+  "fuite_thermique": {
+    "recommendation": "Inspecter l’étanchéité de l’échangeur et rechercher un mélange ou une perte entre les circuits.",
+    "status": "provisional_expert_validation_required"
+  }
+}

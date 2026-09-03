@@ -1,0 +1,63 @@
+{
+  "project": "SmartMaintain",
+  "version": "7.0-simple-input-contract",
+  "machine": "compresseur",
+  "classes": [
+    "normal_operation",
+    "fuite_air",
+    "surchauffe"
+  ],
+  "feature_names": [
+    "pressure_min",
+    "pressure_max",
+    "pressure_mean",
+    "pressure_std",
+    "pressure_rms",
+    "pressure_peak_to_peak",
+    "pressure_crest",
+    "pressure_slope",
+    "pressure_q25",
+    "pressure_q75",
+    "temperature_oil_min",
+    "temperature_oil_max",
+    "temperature_oil_mean",
+    "temperature_oil_std",
+    "temperature_oil_rms",
+    "temperature_oil_peak_to_peak",
+    "temperature_oil_crest",
+    "temperature_oil_slope",
+    "temperature_oil_q25",
+    "temperature_oil_q75",
+    "current_min",
+    "current_max",
+    "current_mean",
+    "current_std",
+    "current_rms",
+    "current_peak_to_peak",
+    "current_crest",
+    "current_slope",
+    "current_q25",
+    "current_q75"
+  ],
+  "window_size": 30,
+  "raw_sensor_names": [
+    "pressure",
+    "temperature_oil",
+    "current"
+  ],
+  "sampling_rate_hz": null,
+  "external_input_type": "series",
+  "feature_extractor_version": "smartmaintain-statistics-v1",
+  "source_manifest": {
+    "normal_operation": "MetroPT-3 public industrial",
+    "fuite_air": "MetroPT-3 public industrial failure intervals",
+    "surchauffe": "documented simulation from MetroPT-3 normal baselines",
+    "external_contract": [
+      "pressure",
+      "temperature_oil",
+      "current"
+    ],
+    "doi": "10.24432/C5VW3R"
+  },
+  "created_at": "2026-08-17T09:06:39.590517+00:00"
+}

@@ -1,0 +1,40 @@
+# ── Secrets — NEVER commit these ────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Python ──────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.pkl
+*.joblib
+
+# ── Frontend ─────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+
+# ── ML model artifacts (large binaries — store in object storage) ─
+backend/ml/models/*.pkl
+backend/ml/models/*.joblib
+backend/ml/models/*.h5
+backend/ml/models/*.pt
+# Keep metadata JSON and requirements files
+!backend/ml/models/*.json
+!backend/ml/models/*.txt
+!backend/ml/models/*.md
+
+# ── Logs ────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
