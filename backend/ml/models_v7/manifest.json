@@ -1,0 +1,63 @@
+{
+  "project": "SmartMaintain",
+  "version": "7.0-simple-input-contract",
+  "fault_count": 8,
+  "model_count": 4,
+  "public_fault_count": 5,
+  "generated_fault_count": 3,
+  "window_sizes": {
+    "moteur": 100000,
+    "pompe": 20,
+    "compresseur": 30,
+    "echangeur": 30
+  },
+  "robustness_noise_sigma": 0.2,
+  "robustness_repeats": 20,
+  "evaluation_scope": "internal validation; not external industrial certification",
+  "sources": {
+    "moteur": {
+      "normal_operation": "VBL-VA001 public experimental, X vibration axis",
+      "degradation_roulement": "VBL-VA001 public experimental, X vibration axis",
+      "desequilibre_desalignement": "VBL-VA001 public experimental; misalignment and unbalance merged",
+      "doi": "10.5281/zenodo.7006575",
+      "external_contract": [
+        "vibration"
+      ]
+    },
+    "pompe": {
+      "normal_operation": "SKAB public experimental anomaly-free",
+      "cavitation": "SKAB public experimental other/12 and other/13",
+      "fuite_joints": "SKAB public hydraulic-leak experiments other/1..4; proxy mapping",
+      "external_contract": [
+        "vibration",
+        "pressure",
+        "temperature",
+        "flow_rate"
+      ],
+      "repository": "https://github.com/waico/SKAB"
+    },
+    "compresseur": {
+      "normal_operation": "MetroPT-3 public industrial",
+      "fuite_air": "MetroPT-3 public industrial failure intervals",
+      "surchauffe": "documented simulation from MetroPT-3 normal baselines",
+      "external_contract": [
+        "pressure",
+        "temperature_oil",
+        "current"
+      ],
+      "doi": "10.24432/C5VW3R"
+    },
+    "echangeur": {
+      "normal_operation": "documented physics simulation",
+      "encrassement": "documented physics simulation",
+      "fuite_thermique": "documented physics simulation",
+      "external_contract": [
+        "temp_in_hot",
+        "temp_out_hot",
+        "temp_in_cold",
+        "temp_out_cold",
+        "flow_rate"
+      ]
+    }
+  }
+}

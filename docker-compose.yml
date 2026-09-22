@@ -1,0 +1,167 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-smartmaintain}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      TZ: Africa/Tunis
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - smartmaintain-net
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    environment:
+      TZ: Africa/Tunis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - smartmaintain-net
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    command: /usr/sbin/mosquitto -c /mosquitto/config/mosquitto.conf
+    networks:
+      - smartmaintain-net
+
+  migrations:
+    build:
+      context: .
+      dockerfile: backend/migrations/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - smartmaintain-net
+
+  auth:
+    build:
+      context: .
+      dockerfile: backend/auth/Dockerfile
+    restart: unless-stopped
+    environment:
+      TZ: Africa/Tunis
+    env_file:
+      - .env
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    networks:
+      - smartmaintain-net
+
+  iot:
+    build:
+      context: .
+      dockerfile: backend/iot/Dockerfile
+    restart: unless-stopped
+    environment:
+      TZ: Africa/Tunis
+    env_file:
+      - .env
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    volumes:
+      - ./backend/iot:/app
+      - ./backend/shared:/app/shared:ro
+    networks:
+      - smartmaintain-net
+
+  ml:
+    build:
+      context: ./backend
+      dockerfile: ml/Dockerfile
+    restart: unless-stopped
+    command: sh -c "pip install --disable-pip-version-check -r requirements.txt && python app.py"
+    environment:
+      TZ: Africa/Tunis
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - smartmaintain-net
+    volumes:
+      # Development bind mounts avoid rebuilding the heavy scientific Python image.
+      - ./backend/ml:/app
+      - ./backend/shared:/app/shared:ro
+
+  alertes:
+    build:
+      context: .
+      dockerfile: backend/alertes/Dockerfile
+    restart: unless-stopped
+    environment:
+      TZ: Africa/Tunis
+    env_file:
+      - .env
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    networks:
+      - smartmaintain-net
+
+  gateway:
+    build:
+      context: .
+      dockerfile: backend/gateway/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      TZ: Africa/Tunis
+    env_file:
+      - .env
+    depends_on:
+      auth:
+        condition: service_started
+      iot:
+        condition: service_started
+      ml:
+        condition: service_started
+      alertes:
+        condition: service_started
+    networks:
+      - smartmaintain-net
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
+    networks:
+      - smartmaintain-net
+
+volumes:
+  pgdata:
+
+networks:
+  smartmaintain-net:
+    driver: bridge

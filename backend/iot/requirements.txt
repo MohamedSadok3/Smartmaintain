@@ -1,0 +1,9 @@
+flask
+flask-cors
+redis
+pandas
+numpy
+scipy
+python-dotenv
+pyjwt
+psycopg2-binary

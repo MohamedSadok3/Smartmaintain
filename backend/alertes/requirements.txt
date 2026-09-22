@@ -1,0 +1,8 @@
+flask
+flask-cors
+flask-socketio
+psycopg2-binary
+redis
+python-dotenv
+eventlet
+pyjwt

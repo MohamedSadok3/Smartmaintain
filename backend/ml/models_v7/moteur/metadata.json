@@ -1,0 +1,38 @@
+{
+  "project": "SmartMaintain",
+  "version": "7.0-simple-input-contract",
+  "machine": "moteur",
+  "classes": [
+    "normal_operation",
+    "degradation_roulement",
+    "desequilibre_desalignement"
+  ],
+  "feature_names": [
+    "vibration_fft_mean",
+    "vibration_fft_std",
+    "vibration_fft_shape_factor",
+    "vibration_fft_rms",
+    "vibration_fft_impulse_factor",
+    "vibration_fft_peak_to_peak",
+    "vibration_fft_kurtosis",
+    "vibration_fft_crest_factor",
+    "vibration_fft_skewness"
+  ],
+  "window_size": 100000,
+  "raw_sensor_names": [
+    "vibration"
+  ],
+  "sampling_rate_hz": 20000,
+  "external_input_type": "series",
+  "feature_extractor_version": "smartmaintain-statistics-v1",
+  "source_manifest": {
+    "normal_operation": "VBL-VA001 public experimental, X vibration axis",
+    "degradation_roulement": "VBL-VA001 public experimental, X vibration axis",
+    "desequilibre_desalignement": "VBL-VA001 public experimental; misalignment and unbalance merged",
+    "doi": "10.5281/zenodo.7006575",
+    "external_contract": [
+      "vibration"
+    ]
+  },
+  "created_at": "2026-08-17T09:06:32.092457+00:00"
+}
